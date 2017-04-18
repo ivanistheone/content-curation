@@ -35,12 +35,11 @@ def authenticate_user_internal(request):
     logging.debug("Logging in user")
     return HttpResponse(json.dumps({
         'success': True,
-        'username': unicode(request.user),
+        'username': str(request.user),
         'first_name': request.user.first_name,
         'last_name': request.user.last_name,
         'is_admin': request.user.is_admin,
     }))
-
 
 @api_view(['POST'])
 @authentication_classes((TokenAuthentication, SessionAuthentication,))
@@ -48,7 +47,7 @@ def authenticate_user_internal(request):
 def check_version(request):
     """ Get version of Ricecooker with which CC is compatible """
     logging.debug("Entering the check_version endpoint")
-    version = json.loads(request.body)['version']
+    version = json.loads(request.body.decode())['version']
     status = None
 
     if LooseVersion(version) >= LooseVersion(VERSION_OK[0]):

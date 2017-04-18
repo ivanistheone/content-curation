@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import xmlrpclib
+try:
+    import xmlrpc.client as xmlrpclib
+except ImportError:
+    import xmlrpclib
 from socket import gaierror, error
 
 VERSION_OK = "0.6.0"
